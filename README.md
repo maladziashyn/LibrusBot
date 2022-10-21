@@ -1,2 +1,2 @@
 # LibrusBot
-Sends notifications from Librus school diary to Telegram
+Sends notifications and attachments from [Librus](https://portal.librus.pl/rodzina) school diary to Telegram.

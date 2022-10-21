@@ -1,0 +1,34 @@
+[
+    {
+        "name": "<NAME>",
+        "type": "rodzic",
+        "download path": "/home/<your acc>/Downloads/Librus",
+        "login": "<your login>",
+        "password": "<your password",
+        "last checked": "2022-05-09 22:29:59"
+    },
+    {
+        "name": "<NAME>",
+        "type": "uczeń",
+        "download path": "/home/<your acc>/Downloads/Librus",
+        "login": "<your login>",
+        "password": "<your password",
+        "last checked": "2022-05-09 22:30:55"
+    },
+    {
+        "name": "<NAME>",
+        "type": "rodzic",
+        "download path": "/home/<your acc>/Downloads/Librus",
+        "login": "<your login>",
+        "password": "<your password",
+        "last checked": "2022-05-09 22:31:27"
+    },
+    {
+        "name": "<NAME>",
+        "type": "uczennica",
+        "download path": "/home/<your acc>/Downloads/Librus",
+        "login": "<your login>",
+        "password": "<your password",
+        "last checked": "2022-05-09 22:32:52"
+    }
+]
