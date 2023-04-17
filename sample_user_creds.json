@@ -1,34 +1,18 @@
 [
     {
-        "name": "<NAME>",
+        "name": "your-name",
         "type": "rodzic",
-        "download path": "/home/<your acc>/Downloads/Librus",
-        "login": "<your login>",
-        "password": "<your password",
-        "last checked": "2022-05-09 22:29:59"
+        "login": "your-login",
+        "download path": "/home/user/Downloads/librus/",
+        "password": "your-password",
+        "last checked": "2023-04-01 00:00:00"
     },
     {
-        "name": "<NAME>",
+        "name": "child's-name",
         "type": "uczeń",
-        "download path": "/home/<your acc>/Downloads/Librus",
-        "login": "<your login>",
-        "password": "<your password",
-        "last checked": "2022-05-09 22:30:55"
-    },
-    {
-        "name": "<NAME>",
-        "type": "rodzic",
-        "download path": "/home/<your acc>/Downloads/Librus",
-        "login": "<your login>",
-        "password": "<your password",
-        "last checked": "2022-05-09 22:31:27"
-    },
-    {
-        "name": "<NAME>",
-        "type": "uczennica",
-        "download path": "/home/<your acc>/Downloads/Librus",
-        "login": "<your login>",
-        "password": "<your password",
-        "last checked": "2022-05-09 22:32:52"
+        "login": "child's-login",
+        "download path": "/home/user/Downloads/librus/",
+        "password": "child's-password",
+        "last checked": "2023-04-01 00:00:00"
     }
 ]

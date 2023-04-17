@@ -1,4 +1,4 @@
 {
-    "bot_token": "YourBotToken",
-    "librus_chat_id": "YourChatID",
+    "bot_token": "<your-bot-token>",
+    "bot_chat_id": "<your-bot-chat-id>"
 }

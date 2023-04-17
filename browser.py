@@ -1,6 +1,3 @@
-import chromedriver_autoinstaller
-import os
-import platform
 import sys
 
 from selenium import webdriver
@@ -11,27 +8,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 class Browser:
+
     DELAY = 10
     URL_LOGIN = "https://portal.librus.pl/rodzina/synergia/loguj"
     URL_OGLOSZENIA = "https://synergia.librus.pl/ogloszenia"
     URL_WIADOMOSCI = "https://synergia.librus.pl/wiadomosci"
 
-    def __init__(self, logger, download_path):
-        self.logger = logger
+    def __init__(self, download_path, chrome_userdata, logger):
         self.download_path = download_path
-
-        chromedriver_autoinstaller.install()
-
-        self.chrome_userdata = os.path.join(
-            dict(os.environ)["LOCALAPPDATA"],
-            "Google\\Chrome\\User data\\Default"
-        ) if platform.system()[:3].lower() == 'win' else os.path.join(
-            dict(os.environ)["HOME"],
-            ".config\\google-chrome\\Default"
-        )
+        self.chrome_userdata = chrome_userdata
+        self.logger = logger
 
         self.options = webdriver.ChromeOptions()
-
         self.options.add_experimental_option("detach", True)
         self.options.add_experimental_option("useAutomationExtension", False)
         self.options.add_experimental_option(
@@ -58,7 +46,7 @@ class Browser:
         sys.exit()
 
     def element_located(self, xpath, click=False, type_text=None,
-                        switch_iframe=False):
+                        switch_iframe=False, skip_elem=False):
         try:
             element = WebDriverWait(self.b, Browser.DELAY).until(
                 exp_cond.presence_of_element_located((By.XPATH, xpath))
@@ -71,7 +59,8 @@ class Browser:
             if switch_iframe:
                 self.b.switch_to.frame(element)
         except Exception as e:
-            self.on_exception(e)
+            if not skip_elem:
+                self.on_exception(e)
 
     def all_elements_located(self, xpath):
         """Return iterable of all elements located."""

@@ -1,27 +1,28 @@
+import chromedriver_autoinstaller
 import json
 import logging
+import os
+import platform
+import sys
 
 from datetime import datetime
+from pathlib import Path
 
 from browser import Browser
 from inbox import Ogloszenia, Wiadomosci
 from telegram import Telegram
 
-# Enter your data into "sample_tg_creds.json"
-# and "sample_user_creds.json"
-# Set your paths to creds
-USER_CREDS_PATH = "sample_user_creds.json"
-TG_CREDS_PATH = "sample_tg_creds.json"
-
-URL_LOGIN = "https://portal.librus.pl/rodzina/synergia/loguj"
-URL_OGLOSZENIA = "https://synergia.librus.pl/ogloszenia"
-URL_WIADOMOSCI = "https://synergia.librus.pl/wiadomosci"
-
-
-def main(logger, chrome, tg_creds, user_creds):
-    tg = Telegram(root_logger, tg_creds["bot_token"], tg_creds["bot_chat_id"])
+def main(logger, chrome, bot_token, bot_chat_id, user_creds):
+    tg = Telegram(root_logger, bot_token, bot_chat_id)
 
     chrome.b.get(URL_LOGIN)
+
+    # Accept cookies
+    chrome.element_located(
+        "//*[@id='consent-categories-description']/div[2]/div/div/button[2]",
+        click=True,
+        skip_elem=True
+    )
 
     # Navigate to login menu
     chrome.element_located(
@@ -108,7 +109,30 @@ def main(logger, chrome, tg_creds, user_creds):
         tg.send_messages_list(ogl.tg_message)
 
 
-if __name__ == "__main__":
+
+# USER_CREDS_PATH = "sample_user_creds.json"
+USER_CREDS_PATH = "user_creds.json"
+# TG_CREDS_PATH = "sample_tg_creds.json"
+TG_CREDS_PATH = "tg_creds.json"
+
+URL_LOGIN = "https://portal.librus.pl/rodzina/synergia/loguj"
+URL_OGLOSZENIA = "https://synergia.librus.pl/ogloszenia"
+URL_WIADOMOSCI = "https://synergia.librus.pl/wiadomosci"
+
+
+if __name__ == '__main__':
+    download_dir = os.path.join(Path.home(), "Downloads")
+    chromedriver_autoinstaller.install()
+    platf = platform.system()[:3].lower()
+    if platf == "win":
+        userdata_dir = os.path.join(dict(os.environ)["LOCALAPPDATA"],
+                                    "Google\\Chrome\\User data\\Default")
+    elif platf == "lin":
+        userdata_dir = os.path.join(os.environ["HOME"],
+                                  ".config\\google-chrome\\Default")
+    else:
+        sys.exit()
+
     logging.basicConfig(filename="logs.txt",
                         format="%(asctime)s [%(levelname)s] %(message)s",
                         level=logging.WARNING)
@@ -124,10 +148,12 @@ if __name__ == "__main__":
 
     updated_user_creds = list()
     for i in range(len(user_credentials)):
-        browser = Browser(root_logger, user_credentials[i]["download path"])
+        browser = Browser(download_dir, userdata_dir, root_logger)
+
         check_time = datetime.strftime(datetime.now(),
                                        "%Y-%m-%d %H:%M:%S")
-        main(root_logger, browser, tg_credentials, user_credentials[i])
+        main(root_logger, browser, tg_credentials['bot_token'],
+             tg_credentials['bot_chat_id'], user_credentials[i])
         browser.b.close()
         browser.b.quit()
 
